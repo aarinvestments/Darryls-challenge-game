@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darryl Wright III Finance Challenge</title>
+    
+    <!-- Open Graph meta tags for social media sharing -->
+    <meta property="og:title" content="The Financial Challenge by Darryl Wright III" />
+    <meta property="og:description" content="Start your financial journey with just a dollar and see how much you can save! A fun challenge to boost your financial literacy." />
+    <meta property="og:url" content="https://your-game-url.com" />
+    <meta property="og:image" content="https://placehold.co/1200x630/4ade80/000000?text=Financial+Challenge" />
+
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background */
+            color: #e2e8f0; /* Light text color */
+        }
+        /* Custom spinner for loading state */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 1.5rem;
+            height: 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main game container -->
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center space-y-6">
+        
+        <h1 class="text-3xl font-extrabold text-white leading-tight">
+            Darryl Wright III Finance Challenge
+        </h1>
+
+        <p class="text-gray-400 text-lg">
+            Start with just a dollar and see how much you can save!
+        </p>
+
+        <!-- Display for savings amount -->
+        <div class="my-6">
+            <div id="savingsDisplay" class="text-6xl font-black text-green-400">$1.00</div>
+        </div>
+        
+        <!-- Progress Bar Section -->
+        <div class="w-full mt-4">
+            <h2 class="text-lg font-semibold text-white">Progress Towards Goal ($100)</h2>
+            <div class="w-full h-8 bg-gray-700 rounded-full mt-2 overflow-hidden shadow-inner">
+                <div id="progressBar" class="h-full bg-green-500 rounded-full transition-all duration-500 ease-in-out" style="width: 0%;"></div>
+            </div>
+            <p id="progressLabel" class="text-gray-400 mt-1">0% complete</p>
+            <p class="text-sm text-gray-400 italic mt-2">Remember, you can save this money any way you choose—in a bank account, a penny jar, or a virtual account!</p>
+        </div>
+
+        <!-- Button to add to savings -->
+        <button id="addSavingsBtn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50">
+            Add to My Savings!
+        </button>
+
+        <!-- Weekly Check-in Feature -->
+        <div class="bg-gray-700 p-4 rounded-xl space-y-2">
+            <h2 class="text-xl font-bold text-white">Weekly Check-in</h2>
+            <p id="weeklyCheckinMsg" class="text-gray-400">Click here weekly to add a bonus to your savings</p>
+            <button id="checkInBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50" disabled>
+                Check In Now! (+ $5)
+            </button>
+        </div>
+        
+        <!-- Financial Literacy Quiz Section -->
+        <div class="bg-gray-700 p-4 rounded-xl space-y-2">
+            <h2 class="text-xl font-bold text-white">Boost Your Knowledge!</h2>
+            <p class="text-gray-400">Test your financial IQ with our quick quiz.</p>
+            <button id="quizLinkBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50">
+                Take the Financial Quiz!
+            </button>
+        </div>
+
+        <!-- Free eBook Section -->
+        <div class="bg-gray-700 p-4 rounded-xl space-y-2">
+            <h2 class="text-xl font-bold text-white">Free eBook: How Money Works</h2>
+            <p class="text-gray-400">Get your free copy of the "How Money Works" ebook to learn the fundamentals of financial literacy.</p>
+            <button id="ebookLinkBtn" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                Get Your Free eBook!
+            </button>
+        </div>
+        
+        <!-- New Contact Form Section -->
+        <div class="bg-gray-700 p-4 rounded-xl space-y-4">
+            <h2 class="text-xl font-bold text-white">Join Our Community!</h2>
+            <p class="text-gray-400">Get updates and challenge tips delivered to your inbox.</p>
+            <!-- Formspree form integration -->
+            <form id="contactForm" action="https://formspree.io/f/mqalgoeq" method="POST" class="space-y-4">
+                <div>
+                    <label for="nameInput" class="sr-only">Your Name</label>
+                    <input type="text" id="nameInput" name="name" placeholder="Your Name" required
+                           class="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div>
+                    <label for="emailInput" class="sr-only">Your Email Address</label>
+                    <input type="email" id="emailInput" name="email" placeholder="Your Email Address" required
+                           class="w-full p-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50">
+                    Sign Me Up!
+                </button>
+            </form>
+            <div id="formMessage" class="text-green-400 font-semibold hidden"></div>
+        </div>
+
+        <!-- Message and motivation area -->
+        <p id="motivationMsg" class="text-lg text-gray-400 pt-4">Click the button to get started!</p>
+
+        <hr class="border-gray-700 my-6">
+
+        <!-- New Social Media Links Section -->
+        <div class="space-y-4">
+            <h2 class="text-xl font-bold text-white">Connect with Darryl</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- YouTube Button -->
+                <button id="youtubeBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-600 focus:ring-opacity-50">
+                    YouTube
+                </button>
+                <!-- LinkedIn Button -->
+                <button id="linkedinBtn" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-700 focus:ring-opacity-50">
+                    LinkedIn
+                </button>
+                <!-- Instagram Button -->
+                <button id="instagramBtn" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold py-2 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-fuchsia-600 focus:ring-opacity-50">
+                    Instagram
+                </button>
+                <!-- Facebook Button -->
+                <button id="facebookBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50">
+                    Facebook
+                </button>
+            </div>
+        </div>
+
+        <!-- Calendly Button -->
+        <div class="bg-gray-700 p-4 rounded-xl space-y-2 mt-6">
+            <h2 class="text-xl font-bold text-white">Ready for a deeper dive?</h2>
+            <p class="text-gray-400">Schedule a 1-on-1 call to discuss your financial goals.</p>
+            <button id="calendlyBtn" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50">
+                Book a Call with Darryl
+            </button>
+        </div>
+
+        <!-- New Stats Section -->
+        <hr class="border-gray-700 my-6">
+        <div class="bg-gray-700 p-4 rounded-xl space-y-2">
+            <h2 class="text-xl font-bold text-white">Your Progress Stats</h2>
+            <p class="text-gray-400">Quizzes Taken: <span id="quizCount" class="font-bold text-yellow-400">0</span></p>
+            <p class="text-gray-400">Ebooks Requested: <span id="ebookCount" class="font-bold text-indigo-400">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        // --- Game Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const savingsDisplay = document.getElementById('savingsDisplay');
+            const addSavingsBtn = document.getElementById('addSavingsBtn');
+            const motivationMsg = document.getElementById('motivationMsg');
+            const progressBar = document.getElementById('progressBar');
+            const progressLabel = document.getElementById('progressLabel');
+            const checkInBtn = document.getElementById('checkInBtn');
+            const weeklyCheckinMsg = document.getElementById('weeklyCheckinMsg');
+            const quizLinkBtn = document.getElementById('quizLinkBtn');
+            const ebookLinkBtn = document.getElementById('ebookLinkBtn'); // New ebook button
+            
+            // --- New Form Elements ---
+            const contactForm = document.getElementById('contactForm');
+            const nameInput = document.getElementById('nameInput');
+            const emailInput = document.getElementById('emailInput');
+            const formMessage = document.getElementById('formMessage');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // --- New Social Media Buttons ---
+            const youtubeBtn = document.getElementById('youtubeBtn');
+            const linkedinBtn = document.getElementById('linkedinBtn');
+            const instagramBtn = document.getElementById('instagramBtn');
+            const facebookBtn = document.getElementById('facebookBtn');
+
+            // --- Calendly Button ---
+            const calendlyBtn = document.getElementById('calendlyBtn');
+            
+            // --- New Stat Elements ---
+            const quizCountEl = document.getElementById('quizCount');
+            const ebookCountEl = document.getElementById('ebookCount');
+
+            // Define the savings goal
+            const GOAL_AMOUNT = 100.00;
+            const WEEKLY_BONUS = 5.00;
+
+            // Load savings from local storage, or start with $1.00
+            let savings = parseFloat(localStorage.getItem('savings')) || 1.00;
+            let lastCheckInDate = localStorage.getItem('lastCheckInDate');
+            
+            // Load stats from local storage, or start at 0
+            let quizCount = parseInt(localStorage.getItem('quizCount')) || 0;
+            let ebookCount = parseInt(localStorage.getItem('ebookCount')) || 0;
+
+            // Function to format the currency
+            const formatCurrency = (amount) => `$${amount.toFixed(2)}`;
+            
+            // Function to update the progress bar
+            const updateProgressBar = () => {
+                const progressPercentage = Math.min((savings / GOAL_AMOUNT) * 100, 100);
+                progressBar.style.width = `${progressPercentage}%`;
+                progressLabel.textContent = `${progressPercentage.toFixed(0)}% complete`;
+            };
+
+            // Function to check if a week has passed for the check-in
+            const isWeeklyCheckInAvailable = () => {
+                if (!lastCheckInDate) return true;
+                const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;
+                const now = new Date().getTime();
+                const lastCheckInTime = new Date(lastCheckInDate).getTime();
+                return (now - lastCheckInTime) > oneWeekInMs;
+            };
+
+            // Function to update the weekly check-in button and message
+            const checkWeeklyCheckInStatus = () => {
+                if (isWeeklyCheckInAvailable()) {
+                    checkInBtn.disabled = false;
+                    weeklyCheckinMsg.textContent = "It's time for your weekly check-in! Click the button for a bonus.";
+                    checkInBtn.classList.remove('bg-gray-500', 'cursor-not-allowed');
+                    checkInBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                } else {
+                    checkInBtn.disabled = true;
+                    weeklyCheckinMsg.textContent = "Come back next week to check in and earn bonus savings!";
+                    checkInBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                    checkInBtn.classList.add('bg-gray-500', 'cursor-not-allowed');
+                }
+            };
+
+            // Function to generate a motivational message
+            const getMotivationalMessage = (amount) => {
+                if (amount < 5) return "Great start! Every penny counts.";
+                if (amount < 10) return "You're building momentum! Keep going.";
+                if (amount < 25) return "Look at you go! You're a natural saver.";
+                if (amount < 50) return "Halfway to a big milestone. You've got this!";
+                return "Wow! You're an inspiration. Challenge a friend now!";
+            };
+
+            // Function to update all displays
+            const updateUI = () => {
+                savingsDisplay.textContent = formatCurrency(savings);
+                localStorage.setItem('savings', savings.toFixed(2));
+                updateProgressBar();
+                checkWeeklyCheckInStatus();
+                
+                // Update the new stats
+                quizCountEl.textContent = quizCount;
+                localStorage.setItem('quizCount', quizCount);
+                ebookCountEl.textContent = ebookCount;
+                localStorage.setItem('ebookCount', ebookCount);
+            };
+
+            // Update the display initially
+            updateUI();
+
+            // Event listener for the main button click
+            addSavingsBtn.addEventListener('click', () => {
+                try {
+                    // Add a random amount between $0.05 and $2.00
+                    const addedAmount = Math.random() * 1.95 + 0.05;
+                    savings += addedAmount;
+                    
+                    // Update the display and progress bar
+                    updateUI();
+                    
+                    // Update the motivational message
+                    motivationMsg.textContent = getMotivationalMessage(savings);
+                } catch (error) {
+                    console.error("An error occurred while adding to savings:", error);
+                }
+            });
+
+            // Event listener for the weekly check-in button
+            checkInBtn.addEventListener('click', () => {
+                if (isWeeklyCheckInAvailable()) {
+                    savings += WEEKLY_BONUS;
+                    lastCheckInDate = new Date().toISOString();
+                    localStorage.setItem('lastCheckInDate', lastCheckInDate);
+                    updateUI();
+                    motivationMsg.textContent = `You earned a $${WEEKLY_BONUS.toFixed(2)} bonus to your savings for checking in!`;
+                }
+            });
+            
+            // Event listener for the quiz link button
+            quizLinkBtn.addEventListener('click', () => {
+                // IMPORTANT: Replace this with your actual quiz URL
+                const quizUrl = "https://financialliteracyindex.com/darrylwrightiii/quiz";
+                window.open(quizUrl, '_blank');
+                quizCount++;
+                updateUI();
+            });
+            
+            // Event listener for the new ebook button
+            ebookLinkBtn.addEventListener('click', () => {
+                const ebookUrl = "https://howmoneyworks.com/darrylwrightiii";
+                window.open(ebookUrl, '_blank');
+                ebookCount++;
+                updateUI();
+            });
+
+            // --- Form Submission Logic ---
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Prevent the default form submission behavior
+
+                // Get form data
+                const formData = new FormData(contactForm);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                
+                // Show a loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<div class="spinner mx-auto"></div>';
+                
+                try {
+                    // Send data to Formspree
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: JSON.stringify({ name, email }),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        formMessage.textContent = 'Thanks for signing up! We\'ll be in touch.';
+                        formMessage.classList.remove('hidden');
+                        contactForm.reset(); // Clear the form
+                    } else {
+                        formMessage.textContent = 'There was an error. Please try again later.';
+                        formMessage.classList.add('text-red-400');
+                        formMessage.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Form submission failed:', error);
+                    formMessage.textContent = 'There was a network error. Please check your connection and try again.';
+                    formMessage.classList.add('text-red-400');
+                    formMessage.classList.remove('hidden');
+                } finally {
+                    // Re-enable the button and restore its text after a delay
+                    setTimeout(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Sign Me Up!';
+                        if (!formMessage.classList.contains('hidden')) {
+                            // Hide the message after a few seconds
+                            setTimeout(() => {
+                                formMessage.classList.add('hidden');
+                                formMessage.classList.remove('text-red-400');
+                            }, 5000);
+                        }
+                    }, 1000);
+                }
+            });
+
+            // --- Social Links Logic ---
+            youtubeBtn.addEventListener('click', () => {
+                window.open("https://www.youtube.com/@DarrylWrightIII", '_blank');
+            });
+
+            linkedinBtn.addEventListener('click', () => {
+                window.open("https://www.linkedin.com/in/darryl-wright-iii/", '_blank');
+            });
+            
+            instagramBtn.addEventListener('click', () => {
+                window.open("https://www.instagram.com/aarinvestments17/", '_blank');
+            });
+
+            facebookBtn.addEventListener('click', () => {
+                window.open("https://www.facebook.com/darrylwrightIII", '_blank');
+            });
+
+            // --- Calendly Logic ---
+            calendlyBtn.addEventListener('click', () => {
+                const calendlyUrl = "https://calendly.com/aarinvestments";
+                window.open(calendlyUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
